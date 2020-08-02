@@ -18,16 +18,22 @@ app.post("/meeting", async (req, res, next) => {
     })
     .promise()
     .catch((err) => console.log(err));
-  res
-    .json({
-      meeting: meetingResponse,
-    })
-    .send();
+  res.send({ meeting: meetingResponse });
 });
 
 app.post("/attendee/:meetingId", async (req, res, next) => {
   const { meetingId } = req.params;
   const { userId } = req.query;
+
+  console.log(
+    `Received request params: ${JSON.stringify(req.params, undefined, 2)}`
+  );
+  console.log(
+    `Received request body: ${JSON.stringify(req.body, undefined, 2)}`
+  );
+  console.log(
+    `Received request query: ${JSON.stringify(req.query, undefined, 2)}`
+  );
 
   if (meetingId === undefined || userId === undefined) {
     res.json({
@@ -43,11 +49,9 @@ app.post("/attendee/:meetingId", async (req, res, next) => {
     })
     .promise()
     .catch((err) => console.log(err));
-  res
-    .json({
-      attendee: attendeeResponse,
-    })
-    .send();
+  res.send({
+    attendee: attendeeResponse,
+  });
 });
 
 app.listen(port, () =>
